@@ -1,0 +1,5 @@
+v1:lgb.py + lgb_predict.py
+    132 features
+    train_local auc: 0.881958
+    test_local auc: 0.830134
+    test_online auc:0.81
