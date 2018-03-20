@@ -32,24 +32,81 @@ v1:
 v2:
 一、用户个人信息：
 性别
-省份（合并数据少的身份为其他）
 年龄段
 
 
 二.用户行为信息:
-1.每个用户action最早和最晚时间差了几天（单位是天）
-2.每个用户所有天（同个年月日的加起来）actionType_coded_1,2,5,6,7,8,9的mean(),std(),min(),max()
-3.每个用户所有月份（同个年月的加起来）actionType_coded_1,2,5,6,7,8,9的mean(),std(),min(),max()
-4.每个用户所有记录actionType_coded_1,2,5,6,7,8,9的sum()
+每个用户action最早和最晚时间差了几天（单位是天）
+每个用户所有天（同个年月日的加起来）actionType_coded_1,2,5,6,7,8,9的mean(),std(),min(),max()
+每个用户所有月份（同个年月的加起来）actionType_coded_1,2,5,6,7,8,9的mean(),std(),min(),max()
+每个用户所有记录actionType_coded_1,2,5,6,7,8,9的sum()
+actionType_coded_6_day_mean/max_min_interval_action
+actionType_coded_5(6,7,8,9) 次数/actionType_coded_2 次数+1
 
 
-三、用户历史订单数据：
-每个用户历史订单总数
-每个用户历史类型1订单总数
-每个用户历史类型0订单总数
-每个用户每个旅游城市/国家/大陆的订单总数
 
-四、用户评论数据
+
+
+
+三、用户历史订单数据：订单id大小与时间先后没关系，订单表中orderid是唯一的，训练集和测试集最后一天是 2017-09-11，所以now定义为：2017-09-11。训练集和测试集最早时间是
+2016-11-05
+
+
+-每个用户历史订单总数
+-每个用户历史类型1订单总数
+-每个用户历史类型0订单总数
+每个用户历史订单最早和最晚差了几天
+
+
++最近的一次交易的 days_from_now, order_year, order_month, order_day, order_weekofyear, order_weekday（没有值为-1）最近的一次交易的continent，country，city（没有值为-1）之前要对continent等做labelEncoder
++往前 90days 订单数量，去的城市、州、国家的数量等
++2016、2017订单数量，精品订单比率
++2017去的大洲、国家、城市数量
++2016、2017每年去了几个月（去的月份数量）
++用户精品订单比例(总的）
++用户是否有精品订单（总的）（0、1）：has_good_order 强特！！
++是否 2016 年和 2017 年都有 order
++2016或者2017年第一笔或者最后一笔订单是否有精品订单：2016_2017_first_last_ordertype（0或者1）强特！！
++最后一个订单的城市的热度
++用户平均每次旅行间隔:days_ratio_since_last_order=days_since_last_order/avg_days_between_order
++用户去过的城市、国家、大洲数
++用户去过的城市、国家富裕度总和和平均数：city_rich、city_avg_rich
++是否是多次订单并且有精品的老用户：multi_order_has_good_order（0、1）
++最近一次订单的时间戳last_order_timestamp、last_order_timestamp_from_now_delta
+
+
+
+
+
+
+
+
+
+
+四、用户评论数据：用户评论的一些订单id不在历史订单表里（评论表里有9800多不同订单id，但只有5600 id在历史订单表里），每个用户只有一个评论
 每个用户评论评分
 用户tag个数
 用户comment关键字个数
+
+
++用户tag score
++用户评论commentsKeyWords 得分
++有没有评论commentsKeyWords flag
++用户评论（rating>=4)好评1差评0
+-用户评论评分的统计特征（min,max,median,std,mean)
+-用户打分(1,2,3,4,5)各占（自己打分）多少比例
+-用户好评、差评次数、好评比率
+-最后一次打分？？？
+-用户打分总数
+-用户评论有tag的比率
+-用户评论关键字的统计特征
+
+
+
+五、action-order
+每个用户order==0次数/actiontype==1,2（5,6,7,8,9）次数
+
+六、comment-order
++用户普通订单评论rating、精品订单rating分
++用户普通订单评论commentsKeyWords分数、精品订单commentsKeyWords分数
++用户最近一次订单的评论rating，commentsKeyWords分数，tag_score
